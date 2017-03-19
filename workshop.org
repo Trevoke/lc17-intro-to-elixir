@@ -3,3 +3,70 @@
 
 * ⚗️ELIXIR! ⚗️
 λ conf 2017 workshop
+* "Aldric!"
+That's me.
+
+Yell that when you're stuck.
+
+Send flames to /dev/null.
+* How this is gonna go down
+- 3x(25 minutes of work + 5-minute break)
+- 15-minute break
+- rinse and repeat
+- also, food somewhere
+* The documentation
+Teach a 👤 to 🐟 ...
+
+https://hexdocs.pm/elixir/Kernel.html#content
+
+This will likely come in handy.
+* REPL work
+** Entering the repl
+=iex= on the command line.
+#+BEGIN_SRC
+$ iex
+Erlang/OTP 19 [erts-8.3] [source] [64-bit] [smp:8:8]
+  [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)>
+#+END_SRC
+** The = operator
+Acts as both assignment and pattern-matching operator.
+- a = 5 # ⇒ 5 (assignment)
+- 5 = a # ⇒ 5 (pattern match)
+- 6 = a # ⇒ MatchError
+- ^a = 5 # ⇒ 5 (pattern match)
+- ^a = 6 # ⇒ MatchError
+Significantly less of a problem than one thinks it might becomes.
+** List comprehensions
+The Enum module has most of the functions you care about:
+- Enum.member?
+- Enum.map
+- Enum.flat_map
+- Enum.reduce
+** Anonymous functions
+#+BEGIN_SRC elixir
+foo = fn() -> 5 end
+foo.()
+sum = fn(x, y) -> x + y end
+sum.(2, 3)
+sum = &(&1 + &2)
+sum.(2, 3)
+#+END_SRC
+** Putting it together!
+#+BEGIN_SRC elixir
+list = [1,2,3,4]
+Enum.map(list, fn(x) -> x * 2 end)
+Enum.map(list, &(&1 * 2))
+a = fn(x) -> x * 2 end
+Enum.map(list, a)
+#+END_SRC
+* BREAK
+* Modules, functions, recursions
+** Modules, aka namespaces
+#+BEGIN_SRC elixir
+defmodule Foo do
+  @static_number 100
+end
+#+END_SRC

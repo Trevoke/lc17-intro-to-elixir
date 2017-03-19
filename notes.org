@@ -1,0 +1,45 @@
+SKILLS
+The skills that attendees will learn include:
+- Familiarity with Elixir syntax
+- Writing tests with Elixir
+- Managing a project with Elixir
+- Using dialixir, a tool that provides you with static type analysis
+- Hot code swapping (upgrade/rollback without downtime)
+- Creating services in Elixir
+- Distributing work in Elixir
+
+CONCEPTS
+This talk will cover the following concepts:
+- Thinking of bits of code as separate (Erlang, not Unix) processes
+- Let it crash : how letting bits of code fail can lead to more resilient code
+- Railway programming
+- Recursion
+- Pattern matching
+- Higher-order functions
+
+OUTLINE
+- Place people in groups
+- Do basic work in REPL
+
+- Creating modules and functions; basic recursion and in-function-definition pattern matching
+
+- Pipe operator, function chaining
+
+- Railway programming
+
+- Distribute work (Task + Agent)
+
+- Distribute work (GenServer)
+
+- Create a project and write tests
+
+- Put GenServer in project
+
+- Recap
+
+- Create umbrella project, one project using another one as a process
+
+- Deploy project, upgrade project
+
+- Upgrade without downtime/hot code reloading
+- End
