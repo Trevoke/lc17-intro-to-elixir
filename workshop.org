@@ -1,4 +1,5 @@
 #+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t reveal_title_slide:nil reveal_slide_number:nil reveal_progress:t reveal_history:t reveal_center:t
 #+REVEAL_THEME: solarized
 
-* λ conf 2017 workshop: ⚗️ELIXIR! ⚗️
+* ⚗️ELIXIR! ⚗️
+λ conf 2017 workshop
