@@ -81,6 +81,8 @@ defmodule Foo do
     myfunc([1,2,3])
   end
 end
+
+Foo.bar()
 #+END_SRC
 ** Pipeline
 #+BEGIN_SRC elixir
