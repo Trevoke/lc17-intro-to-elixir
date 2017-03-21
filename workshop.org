@@ -70,3 +70,37 @@ defmodule Foo do
   @static_number 100
 end
 #+END_SRC
+** Named functions
+#+BEGIN_SRC elixir
+defmodule Foo do
+  def double_numbers(list) do
+    Enum.map(list, fn(x) -> x * 2 end)
+  end
+
+  def bar do
+    myfunc([1,2,3])
+  end
+end
+#+END_SRC
+** Pipeline
+#+BEGIN_SRC elixir
+(1..100)
+|> Enum.filter(fn(x) -> rem(x, 2) == 0 end) # Modulo operator!
+|> Enum.map(fn(x) -> x * 2 end)
+#+END_SRC
+** Putting it together!
+#+BEGIN_SRC elixir
+  defmodule Foo do
+    def call(list, filter, map) do
+      list
+      |> Enum.filter(filter)
+      |> Enum.map(map)
+    end
+  end
+
+  Foo.call(
+    1..100,
+    fn(x) -> rem(x, 3) - 1 == 0 end,
+    fn(x) -> x * 2 end
+  )
+#+END_SRC
