@@ -18,8 +18,6 @@ This talk will cover the following concepts:
 - Higher-order functions
 
 OUTLINE
-- Place people in groups
-- Do basic work in REPL
 
 - Creating modules and functions; basic recursion and in-function-definition pattern matching
 
