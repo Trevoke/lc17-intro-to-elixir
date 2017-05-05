@@ -4,30 +4,19 @@
 -- three hundred and sixty minutes
 
 * ⚗️ELIXIR! ⚗️
-:PROPERTIES:
-:TIME: 0 minutes
-:END:
 λ conf 2017 workshop
 * "Aldric!"
-:PROPERTIES:
-:TIME: 1 minutes
-:END:
 That's me.
 
 Yell that when you're stuck.
 
 Send flames to /dev/null.
 * Getting in groups and group intros
-:PROPERTIES:
-:TIME: 5 minutes
-:END:
-
 Get in groups of four.
 Prefer people you don't know.
 - Your name
 - How you like to receive help
 - Your familiarity with functional programming
-
 * How this is gonna go down
 :PROPERTIES:
 :TIME: 1 minutes
@@ -37,24 +26,15 @@ Prefer people you don't know.
 - rinse and repeat
 - also, food somewhere
 * Getting familiar with codio
-:PROPERTIES:
-:TIME: 5 minutes
-:END:
 - log in
 - set up Elixir VM
 * The documentation
-:PROPERTIES:
-:TIME: 1 minutes
-:END:
 Teach a 👤 to 🐟 ...
 
 https://hexdocs.pm/elixir/Kernel.html#content
 
 This will likely come in handy.
 * REPL work
-:PROPERTIES:
-:TIME: 25 minutes
-:END:
 ** Entering the repl
 =iex= on the command line.
 #+BEGIN_SRC
@@ -71,7 +51,7 @@ iex(1)>
 - ranges
 - maps
 - lists
-** Console interface, get and put
+** Console interface, gets and puts
 - =IO.puts foo=
 - =IO.inspect foo=
 - =input = IO.gets("Your input ")=
@@ -137,13 +117,13 @@ Write code that:
 - Generates a Hash that has key-value pairs, or entries, where.
   - Each key in a pair is a integer between the min and max entered.
   - Each value in the pair is the square of key in that pair.
-
+(hint: use =Enum.reduce/3=)
 #+BEGIN_SRC elixir
 # with a min and max of 2 and 4, respectively, the resulting hash would be:
 a = %{1=>1, 2=>4, 3=>9}
 #+END_SRC
-* BREAK
-* recursion, pattern matching, pipeline
+* SMALL BREAK
+* Recursion, pattern matching, guard clauses
 ** Pattern matching
 #+BEGIN_SRC elixir
 defmodule Foo do
@@ -153,6 +133,14 @@ defmodule Foo do
   def bar(2) do
     IO.puts "yah yah"
   end
+end
+#+END_SRC
+** Pattern matching, anonymous function
+#+BEGIN_SRC elixir
+function = fn
+   1 -> IO.puts "That was a one"
+   2 -> IO.puts "That was a two"
+   _ -> IO.puts "I don't care what that was."
 end
 #+END_SRC
 ** Recursion
@@ -172,6 +160,12 @@ defmodule Foo do
   end
 end
 #+END_SRC
+** Guard clauses on functions
+I refer to this page a /lot/.
+http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guard-clauses
+- =def(x) when x > 5=
+- =def(x) when x < 0=
+- =def(x)=
 ** Fibonacci
 Write recursive code that computes a Fibonacci number.
 The Fibonacci series is defined as:
@@ -182,18 +176,130 @@ The Fibonacci series is defined as:
 - n(x) = n(x-1) + n(x+2)
 ** Fizzbuzz exercise
 Write a program that prints the numbers from 1 to 100. But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz". For numbers which are multiples of both three and five print "FizzBuzz".
-* BREAK
-* Pipeline
+* SMALL BREAK
+* Combining functions
+** Pipelining
 #+BEGIN_SRC elixir
 (1..100)
 |> Enum.filter(fn(x) -> rem(x, 2) == 0 end) # Modulo operator!
 |> Enum.map(fn(x) -> x * 2 end)
 #+END_SRC
-* The =with= keyword
-* GenServers
-* Creating a project
+** Pipeline exercises
+Write a pipeline that:
+- removes odd numbers from a list
+- squares the remaining numbers
+- divides them by two
+- removes the even numbers.
+
+Note that =5/2= may yield a floating-point number so you might want to use =div(5, 2)= instead.
 
 * Guess the number
+Write a module that lets you play a game of guessing a number. To let the computer choose a random number, use something like =Enum.random(1..10)=.
+You might want to use the pipelines to transform the user's input into an integer.
+* SMALL BREAK
+* Rock, paper, scissors
+** Basic game
+Write a module that lets you determine the winner of a two-player game of rock, paper, scissors. The inputs could be =:rock=, =:paper=, =:scissors=. The outputs could be =:player1=, =:player2=, =:draw=.
+
+Remember that:
+- rock beats scissors
+- scissors beats paper
+- paper beats rock
+** Rock, paper, scissors, lizard, spock
+Copy the previous code over to a new file and tweak the rules so that:
+- Spock smashes scissors and vaporizes rock; he is poisoned by lizard and disproven by paper.
+- Lizard poisons Spock and eats paper; it is crushed by rock and decapitated by scissors.
+* GenServers
+** Cast and Call
+#+BEGIN_SRC elixir
+defmodule MyServer do
+  use GenServer
+
+  def handle_cast({:ping, x}, state) do
+    :timer.sleep 2000
+    IO.inspect x
+    {:noreply, state}
+  end
+
+  def handle_call({:ping, x}, _from, state) do
+    :timer.sleep 2000
+    IO.inspect x
+    {:reply, :hello_world, state}
+  end
+end
+
+{:ok, pid} = GenServer.start_link(MyServer, nil) # nil means store nil as state
+GenServer.cast(pid, {:ping, "hello, world"})
+GenServer.call(pid, {:ping, "hello, world"})
+#+END_SRC
+
+** State
+#+BEGIN_SRC elixir
+defmodule MyServer do
+  use GenServer
+
+  def handle_call({:add_name, name}, _from, state) do
+    {:reply, :ok, [name | state]}
+  end
+
+  def handle_call(:greetings, _from, state) do
+    greetings = Enum.map(state, fn(x) -> "Hello, #{x}!" end)
+    {:reply, {:ok, greetings}, state}
+  end
+end
+
+{:ok, pid} = GenServer.start_link(MyServer, nil) # nil means store nil as state
+:ok = GenServer.call(pid, {:add_name, "Kathew"})
+:ok = GenServer.call(pid, {:add_name, "Lichard"})
+{:ok, greetings} = GenServer.call(pid, :greetings)
+#+END_SRC
+** Rock-paper-scissors ... As a Service
+Create a GenServer that lets you play RPS and keeps track of the number of wins for each player as well as a percentage of time each player chose.
+* LONG BREAK
+* Rock Paper Scissors, many processes
+Make it possible to change between rulesets, and preserve stats for each rulesets while the game is running (don't worry about storing anything).
+Maybe each ruleset/stats is a separate process and you can store the pid as part of the state of the game process?
+Maybe you store all the pids in the game state and you send a message to switch to another ruleset.
+* SMALL BREAK
+* RPS, many processes, part 2
+* SMALL BREAK
+* Supervisors & Applications
+** Won't show supervisors outside an application for simplicity
+** An application is a reusable unit of code
+Think "microservice" if you have to.
+* Creating a project
+
+* Code samples
+** Map of squares
+#+BEGIN_SRC elixir
+defmodule SquaresMap do
+  def generate do
+    min = String.to_integer String.trim(IO.gets("Minimum: "))
+    max = String.to_integer String.trim(IO.gets("Maximum: "))
+    generate_hash(min, max)
+  end
+
+  def generate_hash(min, max) do
+    Enum.reduce(min..max, %{}, fn(x, acc) -> Map.put(acc, x, x * x) end)
+  end
+
+end
+#+END_SRC
+** Fizzbuzz
+#+BEGIN_SRC elixir
+defmodule FizzBuzz do
+  def call do
+    Enum.each(1..100, fn
+      x when rem(x, 3) == 0 and rem(x, 5) == 0 -> IO.puts "FizzBuzz"
+      x when rem(x, 3) == 0 -> IO.puts "Fizz"
+      x when rem(x, 5) == 0 -> IO.puts "Buzz"
+      x -> IO.puts x
+    end
+    )
+  end
+end
+#+END_SRC
+** Guess the number
 #+BEGIN_SRC elixir
 defmodule Guess do
   def start do
@@ -233,3 +339,20 @@ Acts as both assignment and pattern-matching operator.
 - ^a = 5 # ⇒ 5 (pattern match)
 - ^a = 6 # ⇒ MatchError
 Significantly less of a problem than one thinks it might becomes.
+* The =with= keyword
+This is how you would implement railway programming.
+#+BEGIN_SRC elixir
+  with {:ok, new_deck1, hand1} <- Deck.deal(original_deck, 5),
+       {:ok, new_deck2, hand2} <- Deck.deal(new_deck1),
+       {:ok, hand1_rank} <- Poker.rank(hand1),
+       {:ok, hand2_rank} <- Poker.rank(hand2) do
+    if hand1_rank > hand2_rank do
+      {:ok, :player_1_wins}
+    else
+      {:ok, :player_2_wins}
+    end
+  else
+    {:error, :not_enough_cards_in_deck} -> {:error, :not_enough_cards, original_deck}
+    {:error, _} -> {:error, :could_not_compare_hands, original_deck}
+  end
+#+END_SRC
