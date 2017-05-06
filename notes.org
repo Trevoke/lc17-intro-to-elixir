@@ -18,26 +18,13 @@ This talk will cover the following concepts:
 - Higher-order functions
 
 OUTLINE
-
-- Creating modules and functions; basic recursion and in-function-definition pattern matching
-
-- Pipe operator, function chaining
-
-- Railway programming
-
 - Distribute work (Task + Agent)
-
 - Distribute work (GenServer)
-
+- Railway programming
 - Create a project and write tests
-
 - Put GenServer in project
-
 - Recap
-
 - Create umbrella project, one project using another one as a process
-
 - Deploy project, upgrade project
-
 - Upgrade without downtime/hot code reloading
 - End

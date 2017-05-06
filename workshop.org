@@ -1,8 +1,6 @@
 #+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t reveal_title_slide:nil reveal_slide_number:nil reveal_progress:t reveal_history:t reveal_center:t
 #+REVEAL_THEME: solarized
 
--- three hundred and sixty minutes
-
 * ⚗️ELIXIR! ⚗️
 λ conf 2017 workshop
 * "Aldric!"
@@ -17,10 +15,7 @@ Prefer people you don't know.
 - Your name
 - How you like to receive help
 - Your familiarity with functional programming
-* How this is gonna go down
-:PROPERTIES:
-:TIME: 1 minutes
-:END:
+* Workshop structure
 - 3x(25 minutes of work + 5-minute break)
 - 15-minute break
 - rinse and repeat
@@ -28,6 +23,7 @@ Prefer people you don't know.
 * Getting familiar with codio
 - log in
 - set up Elixir VM
+* SMALL BREAK
 * The documentation
 Teach a 👤 to 🐟 ...
 
@@ -196,7 +192,7 @@ Note that =5/2= may yield a floating-point number so you might want to use =div(
 * Guess the number
 Write a module that lets you play a game of guessing a number. To let the computer choose a random number, use something like =Enum.random(1..10)=.
 You might want to use the pipelines to transform the user's input into an integer.
-* SMALL BREAK
+* LONG BREAK
 * Rock, paper, scissors
 ** Basic game
 Write a module that lets you determine the winner of a two-player game of rock, paper, scissors. The inputs could be =:rock=, =:paper=, =:scissors=. The outputs could be =:player1=, =:player2=, =:draw=.
@@ -255,7 +251,7 @@ end
 #+END_SRC
 ** Rock-paper-scissors ... As a Service
 Create a GenServer that lets you play RPS and keeps track of the number of wins for each player as well as a percentage of time each player chose.
-* LONG BREAK
+* SMALL BREAK
 * Rock Paper Scissors, many processes
 Make it possible to change between rulesets, and preserve stats for each rulesets while the game is running (don't worry about storing anything).
 Maybe each ruleset/stats is a separate process and you can store the pid as part of the state of the game process?
@@ -265,9 +261,57 @@ Maybe you store all the pids in the game state and you send a message to switch 
 * SMALL BREAK
 * Supervisors & Applications
 ** Won't show supervisors outside an application for simplicity
+Supervisors manage processes
 ** An application is a reusable unit of code
 Think "microservice" if you have to.
 * Creating a project
+=mix new foo --sup=
+** App not always a process tree
+In this case, for didactic purposes
+** directory tree
+#+BEGIN_QUOTE
+foo
+├── config
+│   └── config.exs
+├── lib
+│   ├── foo
+│   │   └── application.ex
+│   └── foo.ex
+├── mix.exs
+├── README.md
+└── test
+    ├── foo_test.exs
+    └── test_helper.exs
+#+END_QUOTE
+** What to supervise?
+Well, the game process would be nice.
+** application.ex
+Shows that the Application is also behaving as a Supervisor
+** Important code
+#+BEGIN_SRC elixir
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+    children = [
+      worker(Foo.Worker, [arg1, arg2, arg3], restart: :permanent),
+    ]
+    opts = [strategy: :one_for_one, name: Foo.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+#+END_SRC
+** Connecting the dots
+#+BEGIN_SRC elixir
+defmodule Game do
+  use GenServer
+  def start_link(args) do
+    GenServer.start_link(Game, args, name: Game)
+  end
+end
+#+END_SRC
+** Exercise
+Put the RPS game in a project. You can test it with =iex -S mix= to start a REPL with the project
+* LONG BREAK
+( ~ 4:20 )
+
 
 * Code samples
 ** Map of squares
@@ -330,7 +374,6 @@ defmodule Guess do
   end
 end
 #+END_SRC
-
 * The = operator
 Acts as both assignment and pattern-matching operator.
 - a = 5 # ⇒ 5 (assignment)
@@ -355,4 +398,38 @@ This is how you would implement railway programming.
     {:error, :not_enough_cards_in_deck} -> {:error, :not_enough_cards, original_deck}
     {:error, _} -> {:error, :could_not_compare_hands, original_deck}
   end
+#+END_SRC
+** anonymous recursion
+#+BEGIN_SRC elixir
+factorial = fn
+  (0,_) -> 1
+  (1,_) -> 1
+  (n, fun) -> n * fun.(n - 1, fun)
+end
+factorial.(6, factorial) # 720
+#+END_SRC
+* Task
+#+BEGIN_SRC elixir
+defmodule Parallel do
+  def map(collection, function) do
+    collection
+    |> Enum.map(&Task.async(fn -> function.(&1) end))
+    |> Enum.map(&Task.await(&1))
+  end
+end
+#+END_SRC
+* Elixir's "Hello World": pmap
+#+BEGIN_SRC elixir
+defmodule Parallel do
+  def pmap(collection, fun) do
+    me = self()
+    collection
+    |> Enum.map(fn (elem) ->
+         spawn_link fn -> (send me, { self(), fun.(elem) }) end
+       end)
+    |> Enum.map(fn (pid) ->
+         receive do { ^pid, result } -> result end
+       end)
+  end
+end
 #+END_SRC
