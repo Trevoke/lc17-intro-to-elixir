@@ -205,6 +205,49 @@ Remember that:
 Copy the previous code over to a new file and tweak the rules so that:
 - Spock smashes scissors and vaporizes rock; he is poisoned by lizard and disproven by paper.
 - Lizard poisons Spock and eats paper; it is crushed by rock and decapitated by scissors.
+* Processes!
+Now things get exciting.
+** Two simple tools
+- =send=
+- =receive=
+** Example
+#+BEGIN_SRC elixir
+iex(12)> send self(), :hello
+:hello
+iex(13)> receive do :hello -> :world end
+:world
+#+END_SRC
+** More complex and imperfect example
+#+BEGIN_SRC elixir
+defmodule Parallel do
+  def pmap(collection, fun) do
+    me = self()
+    collection
+    |> Enum.map(fn (elem) ->
+         spawn fn -> (send me, { self(), fun.(elem) }) end
+       end)
+    |> Enum.map(fn (_) ->
+         receive do { _, result } -> result end
+       end)
+  end
+end
+#+END_SRC
+* Elixir's "Hello World": pmap
+#+BEGIN_SRC elixir
+defmodule Parallel do
+  def pmap(collection, fun) do
+    me = self()
+    collection
+    |> Enum.map(fn (elem) ->
+         spawn_link fn -> (send me, { self(), fun.(elem) }) end
+       end)
+    |> Enum.map(fn (pid) ->
+         receive do { ^pid, result } -> result end
+       end)
+  end
+end
+#+END_SRC
+* SMALL BREAK
 * GenServers
 ** Cast and Call
 #+BEGIN_SRC elixir
@@ -251,7 +294,6 @@ end
 #+END_SRC
 ** Rock-paper-scissors ... As a Service
 Create a GenServer that lets you play RPS and keeps track of the number of wins for each player as well as a percentage of time each player chose.
-* SMALL BREAK
 * Rock Paper Scissors, many processes
 Make it possible to change between rulesets, and preserve stats for each rulesets while the game is running (don't worry about storing anything).
 Maybe each ruleset/stats is a separate process and you can store the pid as part of the state of the game process?
@@ -415,21 +457,6 @@ defmodule Parallel do
     collection
     |> Enum.map(&Task.async(fn -> function.(&1) end))
     |> Enum.map(&Task.await(&1))
-  end
-end
-#+END_SRC
-* Elixir's "Hello World": pmap
-#+BEGIN_SRC elixir
-defmodule Parallel do
-  def pmap(collection, fun) do
-    me = self()
-    collection
-    |> Enum.map(fn (elem) ->
-         spawn_link fn -> (send me, { self(), fun.(elem) }) end
-       end)
-    |> Enum.map(fn (pid) ->
-         receive do { ^pid, result } -> result end
-       end)
   end
 end
 #+END_SRC
