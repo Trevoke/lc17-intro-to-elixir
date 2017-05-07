@@ -131,6 +131,7 @@ defmodule Foo do
   end
 end
 #+END_SRC
+What happens if you call =Foo.bar(3)=?
 ** Pattern matching, anonymous function
 #+BEGIN_SRC elixir
 function = fn
@@ -140,19 +141,19 @@ function = fn
 end
 #+END_SRC
 ** Recursion
-Just pattern matching. Function definition order may matter.
+Just pattern matching. Function definition order may matters (more specific ones go to the top).
 #+BEGIN_SRC elixir
 defmodule Foo do
   def recurse([], acc) do
     IO.puts acc
   end
 
-  def recurse(list) do
-    recurse(list, 0)
-  end
-
   def recurse([head | tail], acc) do
     recurse(tail, acc + head)
+  end
+
+  def recurse(list) do
+    recurse(list, 0)
   end
 end
 #+END_SRC
@@ -163,7 +164,7 @@ http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guar
 - =def(x) when x < 0=
 - =def(x)=
 ** Fibonacci
-Write recursive code that computes a Fibonacci number.
+Write recursive code that computes a Fibonacci number, e.g. =Fibonacci.call(15)=.
 The Fibonacci series is defined as:
 
 - n(x) where x < 1 = undefined
@@ -205,6 +206,7 @@ Remember that:
 Copy the previous code over to a new file and tweak the rules so that:
 - Spock smashes scissors and vaporizes rock; he is poisoned by lizard and disproven by paper.
 - Lizard poisons Spock and eats paper; it is crushed by rock and decapitated by scissors.
+* SMALL BREAK
 * Processes!
 Now things get exciting.
 ** Two simple tools
@@ -217,22 +219,25 @@ iex(12)> send self(), :hello
 iex(13)> receive do :hello -> :world end
 :world
 #+END_SRC
-** More complex and imperfect example
+** We can send any message to any process.
+How to keep track of the sender? How about send the sender's pid?
 #+BEGIN_SRC elixir
-defmodule Parallel do
-  def pmap(collection, fun) do
-    me = self()
-    collection
-    |> Enum.map(fn (elem) ->
-         spawn fn -> (send me, { self(), fun.(elem) }) end
-       end)
-    |> Enum.map(fn (_) ->
-         receive do { _, result } -> result end
-       end)
-  end
-end
+iex(8)> current = self()
+#PID<0.80.0>
+iex(9)> velociraptors = fn -> send(current, {self(), "Velociraptors!"}) end
+#Function<20.118419387/0 in :erl_eval.expr/5>
+iex(10)> child_pid = spawn(velociraptors)
+#PID<0.98.0>
+iex(11)> receive do
+...(11)>   {^child_pid, message} -> IO.puts message
+...(11)> end
+Velociraptors!
+:ok
 #+END_SRC
-* Elixir's "Hello World": pmap
+* Exercise: parallel map
+How would you build code that does parallel mapping?
+** From "Programming Elixir
+Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 #+BEGIN_SRC elixir
 defmodule Parallel do
   def pmap(collection, fun) do
@@ -300,7 +305,7 @@ Maybe each ruleset/stats is a separate process and you can store the pid as part
 Maybe you store all the pids in the game state and you send a message to switch to another ruleset.
 * SMALL BREAK
 * RPS, many processes, part 2
-* SMALL BREAK
+* LONG BREAK
 * Supervisors & Applications
 ** Won't show supervisors outside an application for simplicity
 Supervisors manage processes
@@ -351,7 +356,7 @@ end
 #+END_SRC
 ** Exercise
 Put the RPS game in a project. You can test it with =iex -S mix= to start a REPL with the project
-* LONG BREAK
+* SMALL BREAK
 ( ~ 4:20 )
 
 
@@ -441,7 +446,7 @@ This is how you would implement railway programming.
     {:error, _} -> {:error, :could_not_compare_hands, original_deck}
   end
 #+END_SRC
-** anonymous recursion
+* anonymous recursion
 #+BEGIN_SRC elixir
 factorial = fn
   (0,_) -> 1
