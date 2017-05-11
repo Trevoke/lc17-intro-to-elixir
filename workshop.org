@@ -307,6 +307,8 @@ Maybe you store all the pids in the game state and you send a message to switch 
 * RPS, many processes, part 2
 * LONG BREAK
 * Supervisors & Applications
+** A supervisor is a process guardian
+Gets notified and acts appropriately if a supervised process goes down.
 ** Won't show supervisors outside an application for simplicity
 Supervisors manage processes
 ** An application is a reusable unit of code
@@ -331,7 +333,7 @@ foo
     └── test_helper.exs
 #+END_QUOTE
 ** What to supervise?
-Well, the game process would be nice.
+In general, things that you want to have come back up if they crash.
 ** application.ex
 Shows that the Application is also behaving as a Supervisor
 ** Important code
@@ -353,13 +355,89 @@ defmodule Game do
     GenServer.start_link(Game, args, name: Game)
   end
 end
+
+iex(14)> Game.start_link(nil)
+{:ok, #PID<0.114.0>}
+iex(15)> GenServer.whereis(Game)
+#PID<0.114.0>
 #+END_SRC
 ** Exercise
-Put the RPS game in a project. You can test it with =iex -S mix= to start a REPL with the project
+Put the RPS game in a project with a supervision tree (=--sup=). You can test it with =iex -S mix= to start a REPL with the project. Try to make it crash. See if you get error messages
 * SMALL BREAK
-( ~ 4:20 )
+( ~ 4:50 )
+* Deploying
+https://hexdocs.pm/distillery/walkthrough.html#content
+** Add distillery to RPS project
+In mix.exs file, replace the =deps= function with
+#+BEGIN_SRC elixir
+defp deps do
+  [{:distillery, "~> 1.0"}]
+end
+#+END_SRC
+then run =mix deps.get && mix release.init=
+** Build the release
+#+BEGIN_SRC bash
+MIX_ENV=prod mix release --env=prod
+#+END_SRC
+Now you have a tarball:
+#+BEGIN_QUOTE
+_build/prod/rel/project_name/releases/0.1.0/project_name.tar.gz
+#+END_QUOTE
+** Place that tarball somewhere and untar
+Ye olde
+#+BEGIN_SRC bash
+tar xzf project_name.tar.gz -C /deploy/path
+#+END_SRC
+** Start the app
+#+BEGIN_SRC bash
+/deploy/path/bin/project_name start
+#+END_SRC
+** Connect to it
+#+BEGIN_SRC bash
+/deploy/path/bin/project_name remote_console
+#+END_SRC
+** Build upgrade
+0. Open a new terminal
+1. change version number in mix.exs
+2. MIX_ENV=prod mix release --upgrade --env=prod
+3. _build/prod/rel/project_name/releases/new_version_number/project_name.tar.gz
+3. Create directory /deploy/path/releases/new_version_number
+4. Put the new tarball in there
+5. /deploy/path/bin/project_name upgrade new_version_number
+6. Champagne!
+* Parting thoughts
+Good time for questions!
+If you don't have questions, check out this blog entry: distributed game of life, because why not?
+http://beyondscheme.com/2016/distributed-game-of-life-in-elixir
 
+* Bonus material
+* Railway programming
+This is how you would implement railway programming.
+#+BEGIN_SRC elixir
+  with {:ok, new_deck1, hand1} <- Deck.deal(original_deck, 5),
+       {:ok, new_deck2, hand2} <- Deck.deal(new_deck1),
+       {:ok, hand1_rank} <- Poker.rank(hand1),
+       {:ok, hand2_rank} <- Poker.rank(hand2) do
+    if hand1_rank > hand2_rank do
+      {:ok, :player_1_wins}
+    else
+      {:ok, :player_2_wins}
+    end
+  else
+    {:error, :not_enough_cards_in_deck} -> {:error, :not_enough_cards, original_deck}
+    {:error, _} -> {:error, :could_not_compare_hands, original_deck}
+  end
+#+END_SRC
 
+* anonymous recursion
+#+BEGIN_SRC elixir
+factorial = fn
+  (0,_) -> 1
+  (1,_) -> 1
+  (n, fun) -> n * fun.(n - 1, fun)
+end
+factorial.(6, factorial) # 720
+#+END_SRC
 * Code samples
 ** Map of squares
 #+BEGIN_SRC elixir
@@ -418,50 +496,6 @@ defmodule Guess do
 
   def evaluate_guess(guess, number) when guess == number do
     IO.puts "You guessed right!"
-  end
-end
-#+END_SRC
-* The = operator
-Acts as both assignment and pattern-matching operator.
-- a = 5 # ⇒ 5 (assignment)
-- 5 = a # ⇒ 5 (pattern match)
-- 6 = a # ⇒ MatchError
-- ^a = 5 # ⇒ 5 (pattern match)
-- ^a = 6 # ⇒ MatchError
-Significantly less of a problem than one thinks it might becomes.
-* The =with= keyword
-This is how you would implement railway programming.
-#+BEGIN_SRC elixir
-  with {:ok, new_deck1, hand1} <- Deck.deal(original_deck, 5),
-       {:ok, new_deck2, hand2} <- Deck.deal(new_deck1),
-       {:ok, hand1_rank} <- Poker.rank(hand1),
-       {:ok, hand2_rank} <- Poker.rank(hand2) do
-    if hand1_rank > hand2_rank do
-      {:ok, :player_1_wins}
-    else
-      {:ok, :player_2_wins}
-    end
-  else
-    {:error, :not_enough_cards_in_deck} -> {:error, :not_enough_cards, original_deck}
-    {:error, _} -> {:error, :could_not_compare_hands, original_deck}
-  end
-#+END_SRC
-* anonymous recursion
-#+BEGIN_SRC elixir
-factorial = fn
-  (0,_) -> 1
-  (1,_) -> 1
-  (n, fun) -> n * fun.(n - 1, fun)
-end
-factorial.(6, factorial) # 720
-#+END_SRC
-* Task
-#+BEGIN_SRC elixir
-defmodule Parallel do
-  def map(collection, function) do
-    collection
-    |> Enum.map(&Task.async(fn -> function.(&1) end))
-    |> Enum.map(&Task.await(&1))
   end
 end
 #+END_SRC
