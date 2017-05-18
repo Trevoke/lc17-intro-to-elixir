@@ -1,6 +1,22 @@
 #+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t reveal_title_slide:nil reveal_slide_number:nil reveal_progress:t reveal_history:t reveal_center:t
 #+REVEAL_THEME: solarized
 
+
+* TODO foo
+- cover atoms
+- Named functions - myfunc => double_numbers
+- squares and hash - fix example
+- pattern matching - show default match
+- Processes - where does spawn come from?
+https://hexdocs.pm/elixir/Kernel.html#spawn/1
+- programming elixir needs closing quotes
+- genserver - link to docs / handle_call / reply shape
+- genserver state - pass [] as initial state
+- rps as a service ? small break here?
+- supervisors & apps & processes .. smooth?
+ railway programming, deal, 5, second line
+
+
 * ⚗️ELIXIR! ⚗️
 λ conf 2017 workshop
 * "Aldric!"
