@@ -2,10 +2,10 @@
 #+REVEAL_THEME: solarized
 
 
-* [1/11] foo
+* [3/11] foo
 - [X] cover atoms and tuples
-- [ ] Named functions - myfunc => double_numbers
-- [ ] squares and hash - fix example
+- [X] Named functions - myfunc => double_numbers
+- [X] squares and hash - fix example
 - [ ] pattern matching - show default match
 - [ ] Processes - where does spawn come from?
 https://hexdocs.pm/elixir/Kernel.html#spawn/1
@@ -91,6 +91,7 @@ defmodule Foo do
 end
 #+END_SRC
 ** Named functions
+Implicit return: last evaluated value is what is returned.
 #+BEGIN_SRC elixir
 defmodule Foo do
   def double_numbers(list) do
@@ -98,7 +99,7 @@ defmodule Foo do
   end
 
   def bar do
-    myfunc([1,2,3])
+    double_numbers([1,2,3])
   end
 end
 
@@ -134,7 +135,7 @@ Write code that:
 (hint: use =Enum.reduce/3=)
 #+BEGIN_SRC elixir
 # with a min and max of 2 and 4, respectively, the resulting hash would be:
-a = %{1=>1, 2=>4, 3=>9}
+a = %{2=>4, 3=>9, 4=>16}
 #+END_SRC
 * SMALL BREAK
 * Recursion, pattern matching, guard clauses
