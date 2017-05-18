@@ -2,8 +2,8 @@
 #+REVEAL_THEME: solarized
 
 
-* [/] foo
-- [ ] cover atoms and tuples
+* [1/11] foo
+- [X] cover atoms and tuples
 - [ ] Named functions - myfunc => double_numbers
 - [ ] squares and hash - fix example
 - [ ] pattern matching - show default match
@@ -63,6 +63,8 @@ iex(1)>
 - ranges
 - maps
 - lists
+- atoms
+- tuples
 ** Console interface, gets and puts
 - =IO.puts foo=
 - =IO.inspect foo=
