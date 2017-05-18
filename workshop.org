@@ -238,9 +238,9 @@ iex(13)> receive do :hello -> :world end
 ** We can send any message to any process.
 How to keep track of the sender? How about send the sender's pid?
 #+BEGIN_SRC elixir
-iex(8)> current = self()
+iex(8)> pid_of_repl = self()
 #PID<0.80.0>
-iex(9)> velociraptors = fn -> send(current, {self(), "Velociraptors!"}) end
+iex(9)> velociraptors = fn -> send(pid_of_repl, {self(), "Velociraptors!"}) end
 #Function<20.118419387/0 in :erl_eval.expr/5>
 iex(10)> child_pid = spawn(velociraptors)
 #PID<0.98.0>
