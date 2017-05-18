@@ -2,19 +2,19 @@
 #+REVEAL_THEME: solarized
 
 
-* TODO foo
-- cover atoms
-- Named functions - myfunc => double_numbers
-- squares and hash - fix example
-- pattern matching - show default match
-- Processes - where does spawn come from?
+* [/] foo
+- [ ] cover atoms and tuples
+- [ ] Named functions - myfunc => double_numbers
+- [ ] squares and hash - fix example
+- [ ] pattern matching - show default match
+- [ ] Processes - where does spawn come from?
 https://hexdocs.pm/elixir/Kernel.html#spawn/1
-- programming elixir needs closing quotes
-- genserver - link to docs / handle_call / reply shape
-- genserver state - pass [] as initial state
-- rps as a service ? small break here?
-- supervisors & apps & processes .. smooth?
- railway programming, deal, 5, second line
+- [ ] programming elixir needs closing quotes
+- [ ] genserver - link to docs / handle_call / reply shape
+- [ ] genserver state - pass [] as initial state
+- [ ] rps as a service ? small break here?
+- [ ] supervisors & apps & processes .. smooth?
+- [ ] railway programming, deal, 5, second line
 
 
 * ⚗️ELIXIR! ⚗️
@@ -357,6 +357,7 @@ Shows that the Application is also behaving as a Supervisor
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
     children = [
+      # Foo.Worker is a made-up module name
       worker(Foo.Worker, [arg1, arg2, arg3], restart: :permanent),
     ]
     opts = [strategy: :one_for_one, name: Foo.Supervisor]
@@ -365,16 +366,16 @@ Shows that the Application is also behaving as a Supervisor
 #+END_SRC
 ** Connecting the dots
 #+BEGIN_SRC elixir
-defmodule Game do
+defmodule Foo.Worker do
   use GenServer
   def start_link(args) do
-    GenServer.start_link(Game, args, name: Game)
+    GenServer.start_link(Foo.Worker, args, name: Foo.Worker)
   end
 end
 
-iex(14)> Game.start_link(nil)
+iex(14)> Foo.Worker.start_link(nil)
 {:ok, #PID<0.114.0>}
-iex(15)> GenServer.whereis(Game)
+iex(15)> GenServer.whereis(Foo.Worker)
 #PID<0.114.0>
 #+END_SRC
 ** Exercise
