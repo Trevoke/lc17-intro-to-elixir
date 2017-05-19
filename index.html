@@ -28,16 +28,16 @@
 <div class="slides">
 
 <section>
-<section id="slide-org057d54b">
-<h2 id="org057d54b">⚗️ELIXIR! ⚗️</h2>
+<section id="slide-org3293fe6">
+<h2 id="org3293fe6">⚗️ELIXIR! ⚗️</h2>
 <p>
 λ conf 2017 workshop
 </p>
 </section>
 </section>
 <section>
-<section id="slide-orgb7cf3a4">
-<h2 id="orgb7cf3a4">"Aldric!"</h2>
+<section id="slide-org5ada0b6">
+<h2 id="org5ada0b6">"Aldric!"</h2>
 <p>
 That's me.
 </p>
@@ -52,8 +52,8 @@ Send flames to /dev/null.
 </section>
 </section>
 <section>
-<section id="slide-org8c90276">
-<h2 id="org8c90276">Getting in groups and group intros</h2>
+<section id="slide-org4d9ead9">
+<h2 id="org4d9ead9">Getting in groups and group intros</h2>
 <p>
 Get in groups of four.
 Prefer people you don't know.
@@ -67,8 +67,8 @@ Prefer people you don't know.
 </section>
 </section>
 <section>
-<section id="slide-org208094d">
-<h2 id="org208094d">Workshop structure</h2>
+<section id="slide-org292ea47">
+<h2 id="org292ea47">Workshop structure</h2>
 <ul>
 <li>3x(25 minutes of work + 5-minute break)</li>
 <li>15-minute break</li>
@@ -79,8 +79,8 @@ Prefer people you don't know.
 </section>
 </section>
 <section>
-<section id="slide-org2c8b873">
-<h2 id="org2c8b873">Getting familiar with codio</h2>
+<section id="slide-orgebad81f">
+<h2 id="orgebad81f">Getting familiar with codio</h2>
 <ul>
 <li>log in</li>
 <li>set up Elixir VM</li>
@@ -89,13 +89,13 @@ Prefer people you don't know.
 </section>
 </section>
 <section>
-<section id="slide-org4f8715a">
-<h2 id="org4f8715a">SMALL BREAK</h2>
+<section id="slide-org336e98d">
+<h2 id="org336e98d">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgc2d7931">
-<h2 id="orgc2d7931">The documentation</h2>
+<section id="slide-orgbb54caf">
+<h2 id="orgbb54caf">The documentation</h2>
 <p>
 Teach a 👤 to 🐟 ...
 </p>
@@ -110,12 +110,12 @@ This will likely come in handy.
 </section>
 </section>
 <section>
-<section id="slide-org256a65e">
-<h2 id="org256a65e">REPL work</h2>
-<div class="outline-text-2" id="text-org256a65e">
+<section id="slide-orgba7a07c">
+<h2 id="orgba7a07c">REPL work</h2>
+<div class="outline-text-2" id="text-orgba7a07c">
 </div></section>
-<section id="slide-orgc7be1d0">
-<h3 id="orgc7be1d0">Entering the repl</h3>
+<section id="slide-org07670d7">
+<h3 id="org07670d7">Entering the repl</h3>
 <p>
 <code>iex</code> on the command line.
 </p>
@@ -128,21 +128,76 @@ Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)&gt;
 </pre>
 </section>
-<section id="slide-orge8ac597">
-<h3 id="orge8ac597">Data structures</h3>
-<ul>
-<li>numbers</li>
-<li>strings (interpolation)</li>
-<li>ranges</li>
-<li>maps</li>
-<li>lists</li>
-<li>atoms</li>
-<li>tuples</li>
+<section id="slide-org3e906e0">
+<h3 id="org3e906e0">Data structures</h3>
+<div class="outline-text-3" id="text-org3e906e0">
+</div></section>
+<section id="slide-orgcce7c2c">
+<h4 id="orgcce7c2c">numbers</h4>
+<div class="org-src-container">
 
-</ul>
+<pre  class="src src-elixir">1
+-5
+389321
+4.9
+</pre>
+</div>
 </section>
-<section id="slide-org170470f">
-<h3 id="org170470f">Console interface, gets and puts</h3>
+<section id="slide-orgf5fe284">
+<h4 id="orgf5fe284">strings (interpolation)</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elixir"><span style="color: #8b2252;">"Hello, world!"</span>
+<span style="color: #8b2252;">"Hello, </span><span style="color: #a0522d;">#{someone}</span><span style="color: #8b2252;">!"</span>
+<span style="color: #8b2252;">'What?'</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">NOT A STRING. ERLANG CHARLIST.</span>
+</pre>
+</div>
+</section>
+<section id="slide-orgbe89859">
+<h4 id="orgbe89859">ranges</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elixir">1..10
+</pre>
+</div>
+</section>
+<section id="slide-orgc13784c">
+<h4 id="orgc13784c">maps</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elixir">%{<span style="color: #8b2252;">"a"</span> =&gt; 5, <span style="color: #27408b;">b:</span> 7}
+</pre>
+</div>
+</section>
+<section id="slide-org94d4afb">
+<h4 id="org94d4afb">lists</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elixir">[1,2,3]
+</pre>
+</div>
+</section>
+<section id="slide-orge1ddc16">
+<h4 id="orge1ddc16">atoms</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elixir"><span style="color: #27408b;">:hello</span>
+:<span style="color: #8b2252;">"atom with space"</span>
+</pre>
+</div>
+</section>
+<section id="slide-org2657b6c">
+<h4 id="org2657b6c">tuples</h4>
+<div class="org-src-container">
+
+<pre  class="src src-elixir">{<span style="color: #27408b;">:ok</span>, <span style="color: #8b2252;">"sweet"</span>}
+{1,2,3,4}
+{<span style="color: #27408b;">:error</span>, <span style="color: #27408b;">:connection_not_established</span>}
+</pre>
+</div>
+</section>
+<section id="slide-org1cf0328">
+<h3 id="org1cf0328">Console interface, gets and puts</h3>
 <ul>
 <li><code>IO.puts foo</code></li>
 <li><code>IO.inspect foo</code></li>
@@ -150,8 +205,8 @@ iex(1)&gt;
 
 </ul>
 </section>
-<section id="slide-org2e4ce41">
-<h3 id="org2e4ce41">List comprehensions</h3>
+<section id="slide-org6d3fca9">
+<h3 id="org6d3fca9">List comprehensions</h3>
 <p>
 The Enum module has most of the functions you care about:
 </p>
@@ -163,8 +218,8 @@ The Enum module has most of the functions you care about:
 
 </ul>
 </section>
-<section id="slide-orgb892184">
-<h3 id="orgb892184">Anonymous functions</h3>
+<section id="slide-org6f930d6">
+<h3 id="org6f930d6">Anonymous functions</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a0522d;">foo</span> = <span style="color: #a020f0;">fn</span>() -&gt; 5 <span style="color: #a020f0;">end</span>
@@ -176,8 +231,8 @@ sum.(2, 3)
 </pre>
 </div>
 </section>
-<section id="slide-orgc14467d">
-<h3 id="orgc14467d">Modules, aka namespaces</h3>
+<section id="slide-orge8ce4d0">
+<h3 id="orge8ce4d0">Modules, aka namespaces</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">Foo</span> <span style="color: #a020f0;">do</span>
@@ -186,8 +241,8 @@ sum.(2, 3)
 </pre>
 </div>
 </section>
-<section id="slide-orgc99501d">
-<h3 id="orgc99501d">Named functions</h3>
+<section id="slide-org1f8e988">
+<h3 id="org1f8e988">Named functions</h3>
 <p>
 Implicit return: last evaluated value is what is returned.
 </p>
@@ -207,12 +262,12 @@ Implicit return: last evaluated value is what is returned.
 </pre>
 </div>
 </section>
-<section id="slide-org492b538">
-<h3 id="org492b538">REPL / mapping Exercises</h3>
-<div class="outline-text-3" id="text-org492b538">
+<section id="slide-orgf3fde8c">
+<h3 id="orgf3fde8c">REPL / mapping Exercises</h3>
+<div class="outline-text-3" id="text-orgf3fde8c">
 </div></section>
-<section id="slide-orge265e00">
-<h4 id="orge265e00">Each</h4>
+<section id="slide-org499c278">
+<h4 id="org499c278">Each</h4>
 <p>
 Take this data structure and create the following output:
 </p>
@@ -229,8 +284,8 @@ Take this data structure and create the following output:
 </pre>
 </div>
 </section>
-<section id="slide-orgb558325">
-<h4 id="orgb558325">Map</h4>
+<section id="slide-orgb9b7df4">
+<h4 id="orgb9b7df4">Map</h4>
 <p>
 Take this data structure and create the following output:
 </p>
@@ -243,17 +298,17 @@ Take this data structure and create the following output:
 </pre>
 </div>
 </section>
-<section id="slide-orgf544c42">
-<h4 id="orgf544c42">Squares and Hash</h4>
+<section id="slide-org4ff8d12">
+<h4 id="org4ff8d12">Squares and Hash</h4>
 <p>
 Write code that:
 </p>
 <ul>
-<li>Prompts the user for a minimum and maximum number.</li>
-<li>Generates a Hash that has key-value pairs, or entries, where.
+<li>Prompts the user for a minimum and maximum number</li>
+<li>Generates a Hash that has key-value pairs, or entries, where:
 <ul>
-<li>Each key in a pair is a integer between the min and max entered.</li>
-<li>Each value in the pair is the square of key in that pair.</li>
+<li>Each key in a pair is a integer between the min and max entered</li>
+<li>Each value in the pair is the square of key in that pair</li>
 
 </ul></li>
 
@@ -271,17 +326,17 @@ Write code that:
 </section>
 </section>
 <section>
-<section id="slide-org865657c">
-<h2 id="org865657c">SMALL BREAK</h2>
+<section id="slide-orgbe17d4e">
+<h2 id="orgbe17d4e">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgf48fa74">
-<h2 id="orgf48fa74">Recursion, pattern matching, guard clauses</h2>
-<div class="outline-text-2" id="text-orgf48fa74">
+<section id="slide-org599b7e2">
+<h2 id="org599b7e2">Recursion, pattern matching, guard clauses</h2>
+<div class="outline-text-2" id="text-org599b7e2">
 </div></section>
-<section id="slide-org1d06d1f">
-<h3 id="org1d06d1f">Pattern matching / destructuring</h3>
+<section id="slide-org5fb29be">
+<h3 id="org5fb29be">Pattern matching / destructuring</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a0522d;">a</span> = 5
@@ -293,8 +348,8 @@ Write code that:
 </pre>
 </div>
 </section>
-<section id="slide-org9566323">
-<h3 id="org9566323">Pattern matching in functions</h3>
+<section id="slide-org7c96a8a">
+<h3 id="org7c96a8a">Pattern matching in functions</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">Foo</span> <span style="color: #a020f0;">do</span>
@@ -314,8 +369,8 @@ Write code that:
 What happens if the last function is not defined?
 </p>
 </section>
-<section id="slide-org5c96708">
-<h3 id="org5c96708">Pattern matching, anonymous function</h3>
+<section id="slide-org85f1132">
+<h3 id="org85f1132">Pattern matching, anonymous function</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a0522d;">function</span> = <span style="color: #a020f0;">fn</span>
@@ -326,8 +381,8 @@ What happens if the last function is not defined?
 </pre>
 </div>
 </section>
-<section id="slide-org2d81d8c">
-<h3 id="org2d81d8c">Recursion</h3>
+<section id="slide-orgbba27db">
+<h3 id="orgbba27db">Recursion</h3>
 <p>
 Just pattern matching. Function definition order may matters (more specific ones go to the top).
 </p>
@@ -349,8 +404,8 @@ Just pattern matching. Function definition order may matters (more specific ones
 </pre>
 </div>
 </section>
-<section id="slide-org6f8946a">
-<h3 id="org6f8946a">Guard clauses on functions</h3>
+<section id="slide-org6145913">
+<h3 id="org6145913">Guard clauses on functions</h3>
 <p>
 I refer to this page a <i>lot</i>.
 </p>
@@ -365,8 +420,8 @@ I refer to this page a <i>lot</i>.
 
 </ul>
 </section>
-<section id="slide-orgf0b87a3">
-<h3 id="orgf0b87a3">Fibonacci</h3>
+<section id="slide-org4b25060">
+<h3 id="org4b25060">Fibonacci</h3>
 <p>
 Write recursive code that computes a Fibonacci number, e.g. <code>Fibonacci.call(15)</code>.
 The Fibonacci series is defined as:
@@ -380,8 +435,8 @@ The Fibonacci series is defined as:
 
 </ul>
 </section>
-<section id="slide-org8507660">
-<h3 id="org8507660">Fizzbuzz exercise</h3>
+<section id="slide-org54c8302">
+<h3 id="org54c8302">Fizzbuzz exercise</h3>
 <p>
 Write a program that prints the numbers from 1 to 100.
 </p>
@@ -392,17 +447,17 @@ For multiples of three print "Fizz" instead of the number and for multiples of f
 </section>
 </section>
 <section>
-<section id="slide-org18a41e2">
-<h2 id="org18a41e2">SMALL BREAK</h2>
+<section id="slide-org5bf1790">
+<h2 id="org5bf1790">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-org2e1c560">
-<h2 id="org2e1c560">Combining functions</h2>
-<div class="outline-text-2" id="text-org2e1c560">
+<section id="slide-org9b97399">
+<h2 id="org9b97399">Combining functions</h2>
+<div class="outline-text-2" id="text-org9b97399">
 </div></section>
-<section id="slide-org9fa4041">
-<h3 id="org9fa4041">Pipelining</h3>
+<section id="slide-org7ddbe01">
+<h3 id="org7ddbe01">Pipelining</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir">(1..100)
@@ -411,8 +466,8 @@ For multiples of three print "Fizz" instead of the number and for multiples of f
 </pre>
 </div>
 </section>
-<section id="slide-orge50e8ac">
-<h3 id="orge50e8ac">Pipeline exercises</h3>
+<section id="slide-org8a811df">
+<h3 id="org8a811df">Pipeline exercises</h3>
 <p>
 Write a pipeline that:
 </p>
@@ -431,8 +486,8 @@ Note that <code>5/2</code> may yield a floating-point number so you might want t
 </section>
 </section>
 <section>
-<section id="slide-org88e7fe0">
-<h2 id="org88e7fe0">Guess the number</h2>
+<section id="slide-org095ac5a">
+<h2 id="org095ac5a">Guess the number</h2>
 <p>
 Write a module that lets you play a game of guessing a number. To let the computer choose a random number, use something like <code>Enum.random(1..10)</code>.
 You might want to use the pipelines to transform the user's input into an integer.
@@ -440,17 +495,17 @@ You might want to use the pipelines to transform the user's input into an intege
 </section>
 </section>
 <section>
-<section id="slide-orgd50f3ee">
-<h2 id="orgd50f3ee">LONG BREAK</h2>
+<section id="slide-org2298118">
+<h2 id="org2298118">LONG BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-org1b53247">
-<h2 id="org1b53247">Rock, paper, scissors</h2>
-<div class="outline-text-2" id="text-org1b53247">
+<section id="slide-org4b3341d">
+<h2 id="org4b3341d">Rock, paper, scissors</h2>
+<div class="outline-text-2" id="text-org4b3341d">
 </div></section>
-<section id="slide-orgd460e44">
-<h3 id="orgd460e44">Basic game</h3>
+<section id="slide-orgcd72603">
+<h3 id="orgcd72603">Basic game</h3>
 <p>
 Write a module that lets you determine the winner of a two-player game of rock, paper, scissors. The inputs could be <code>:rock</code>, <code>:paper</code>, <code>:scissors</code>. The outputs could be <code>:player1</code>, <code>:player2</code>, <code>:draw</code>.
 </p>
@@ -465,8 +520,8 @@ Remember that:
 
 </ul>
 </section>
-<section id="slide-org05255ea">
-<h3 id="org05255ea">Rock, paper, scissors, lizard, spock</h3>
+<section id="slide-org6efc029">
+<h3 id="org6efc029">Rock, paper, scissors, lizard, spock</h3>
 <p>
 Copy the previous code over to a new file and tweak the rules so that:
 </p>
@@ -478,33 +533,33 @@ Copy the previous code over to a new file and tweak the rules so that:
 </section>
 </section>
 <section>
-<section id="slide-orgb2c23b2">
-<h2 id="orgb2c23b2">SMALL BREAK</h2>
+<section id="slide-org59028b4">
+<h2 id="org59028b4">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-org5568a83">
-<h2 id="org5568a83">Processes!</h2>
+<section id="slide-org0f21361">
+<h2 id="org0f21361">Processes!</h2>
 <p>
 Now things get exciting.
 </p>
 </section>
-<section id="slide-org2b6051b">
-<h3 id="org2b6051b">What is <code>self()</code> anyway?</h3>
+<section id="slide-org8e6cb7e">
+<h3 id="org8e6cb7e">What is <code>self()</code> anyway?</h3>
 <p>
 In Elixir, <code>self()</code> refers to THE CURRENT PROCESS.
 </p>
 </section>
-<section id="slide-org81ea0b2">
-<h3 id="org81ea0b2">Two simple tools</h3>
+<section id="slide-orgfa02ff8">
+<h3 id="orgfa02ff8">Two simple tools</h3>
 <ul>
 <li><code>send</code></li>
 <li><code>receive</code></li>
 
 </ul>
 </section>
-<section id="slide-orgfbf55d1">
-<h3 id="orgfbf55d1">Message order</h3>
+<section id="slide-orgdf02c63">
+<h3 id="orgdf02c63">Message order</h3>
 <p>
 Messages are fundamentally FIFO, <b>HOWEVER</b>!
 </p>
@@ -513,8 +568,8 @@ Messages are fundamentally FIFO, <b>HOWEVER</b>!
 THE FIRST MESSAGE TO MATCH A PATTERN WILL BE THE FIRST TO GO.
 </p>
 </section>
-<section id="slide-org8712e8e">
-<h3 id="org8712e8e">Example</h3>
+<section id="slide-orge46b256">
+<h3 id="orge46b256">Example</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir">iex(12)&gt; <span style="color: #a020f0;">send</span> self(), <span style="color: #27408b;">:hello</span>
@@ -524,8 +579,8 @@ iex(13)&gt; <span style="color: #a020f0;">receive</span> <span style="color: #a0
 </pre>
 </div>
 </section>
-<section id="slide-org493c01c">
-<h3 id="org493c01c">We can send any message to any process.</h3>
+<section id="slide-org4227471">
+<h3 id="org4227471">We can send any message to any process.</h3>
 <p>
 How to keep track of the sender? How about send the sender's pid?
 <a href="https://hexdocs.pm/elixir/Kernel.html#spawn/1">https://hexdocs.pm/elixir/Kernel.html#spawn/1</a>
@@ -550,14 +605,14 @@ iex(11)&gt; <span style="color: #a020f0;">receive</span> <span style="color: #a0
 </section>
 </section>
 <section>
-<section id="slide-orgdfc96dc">
-<h2 id="orgdfc96dc">Exercise: distributed map</h2>
+<section id="slide-orgbc6443a">
+<h2 id="orgbc6443a">Exercise: distributed map</h2>
 <p>
 How would you build code that does distributed mapping?
 </p>
 </section>
-<section id="slide-org4ae6d7c">
-<h3 id="org4ae6d7c">From "Programming Elixir"</h3>
+<section id="slide-org0aefa72">
+<h3 id="org0aefa72">From "Programming Elixir"</h3>
 <p>
 Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 </p>
@@ -580,17 +635,17 @@ Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 </section>
 </section>
 <section>
-<section id="slide-org714b967">
-<h2 id="org714b967">SMALL BREAK</h2>
+<section id="slide-org081823a">
+<h2 id="org081823a">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-org55bf2de">
-<h2 id="org55bf2de">GenServers</h2>
-<div class="outline-text-2" id="text-org55bf2de">
+<section id="slide-orgf1b242a">
+<h2 id="orgf1b242a">GenServers</h2>
+<div class="outline-text-2" id="text-orgf1b242a">
 </div></section>
-<section id="slide-orga19eb78">
-<h3 id="orga19eb78">Cast and Call</h3>
+<section id="slide-orge6cbab6">
+<h3 id="orge6cbab6">Cast and Call</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">MyServer</span> <span style="color: #a020f0;">do</span>
@@ -615,8 +670,8 @@ Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 </div>
 
 </section>
-<section id="slide-org94c3bcd">
-<h3 id="org94c3bcd">State</h3>
+<section id="slide-org1d89788">
+<h3 id="org1d89788">State</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">MyServer</span> <span style="color: #a020f0;">do</span>
@@ -638,8 +693,8 @@ Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 </pre>
 </div>
 </section>
-<section id="slide-org8686296">
-<h3 id="org8686296">Relevant documentation</h3>
+<section id="slide-orgf8bc824">
+<h3 id="orgf8bc824">Relevant documentation</h3>
 <p>
 <a href="https://hexdocs.pm/elixir/GenServer.html#c:handle_call/3">https://hexdocs.pm/elixir/GenServer.html#c:handle_call/3</a>
 </p>
@@ -650,18 +705,18 @@ Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 </section>
 </section>
 <section>
-<section id="slide-org30d72ed">
-<h2 id="org30d72ed">OPTIONAL SMALL BREAK</h2>
+<section id="slide-org0d250e0">
+<h2 id="org0d250e0">OPTIONAL SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-org978cf00">
-<h2 id="org978cf00">GenServers part 2</h2>
+<section id="slide-org06cb0d7">
+<h2 id="org06cb0d7">GenServers part 2</h2>
 </section>
 </section>
 <section>
-<section id="slide-org79f5c69">
-<h2 id="org79f5c69">Rock-paper-scissors ... As a Service</h2>
+<section id="slide-org9a7b9d1">
+<h2 id="org9a7b9d1">Rock-paper-scissors ... As a Service</h2>
 <p>
 Create a GenServer that lets you play RPS and keeps track of the number of wins for each player as well as a percentage of time each player chose.
 </p>
@@ -672,8 +727,8 @@ Send a message to get a string version of the stats back.
 </section>
 </section>
 <section>
-<section id="slide-orgb68e9f9">
-<h2 id="orgb68e9f9">Rock Paper Scissors, many processes</h2>
+<section id="slide-org4b777cb">
+<h2 id="org4b777cb">Rock Paper Scissors, many processes</h2>
 <p>
 Make it possible to change between rulesets, and preserve stats for each rulesets while the game is running (don't worry about storing anything).
 </p>
@@ -689,61 +744,61 @@ Thoughts:
 </section>
 </section>
 <section>
-<section id="slide-orgabab568">
-<h2 id="orgabab568">SMALL BREAK</h2>
+<section id="slide-org942e189">
+<h2 id="org942e189">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgb5779ff">
-<h2 id="orgb5779ff">RPS, many processes, part 2</h2>
+<section id="slide-org80f54a3">
+<h2 id="org80f54a3">RPS, many processes, part 2</h2>
 </section>
 </section>
 <section>
-<section id="slide-org3147b30">
-<h2 id="org3147b30">LONG BREAK</h2>
+<section id="slide-org91ff9ec">
+<h2 id="org91ff9ec">LONG BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgd58431d">
-<h2 id="orgd58431d">Supervisors &amp; Applications</h2>
-<div class="outline-text-2" id="text-orgd58431d">
+<section id="slide-orgc2645f5">
+<h2 id="orgc2645f5">Supervisors &amp; Applications</h2>
+<div class="outline-text-2" id="text-orgc2645f5">
 </div></section>
-<section id="slide-org505fc7d">
-<h3 id="org505fc7d">A supervisor is a process guardian</h3>
+<section id="slide-orgddd776f">
+<h3 id="orgddd776f">A supervisor is a process guardian</h3>
 <p>
 Gets notified and acts appropriately if a supervised process goes down.
 </p>
 </section>
-<section id="slide-org06188f3">
-<h3 id="org06188f3">Won't show supervisors outside an application for simplicity</h3>
+<section id="slide-org5549f4c">
+<h3 id="org5549f4c">Won't show supervisors outside an application for simplicity</h3>
 <ul>
 <li>Supervisors manage processes</li>
 <li>Supervising processes in REPL is useless for our purposes.</li>
 
 </ul>
 </section>
-<section id="slide-orgd6edaea">
-<h3 id="orgd6edaea">An application is a reusable unit of code</h3>
+<section id="slide-org3230406">
+<h3 id="org3230406">An application is a reusable unit of code</h3>
 <p>
 Think "microservice" if you have to.
 </p>
 </section>
 </section>
 <section>
-<section id="slide-orgd549c62">
-<h2 id="orgd549c62">Creating a project</h2>
+<section id="slide-orga835ac8">
+<h2 id="orga835ac8">Creating a project</h2>
 <p>
 <code>mix new foo --sup</code>
 </p>
 </section>
-<section id="slide-org08bb6ef">
-<h3 id="org08bb6ef">App not always a process tree</h3>
+<section id="slide-org4fb9795">
+<h3 id="org4fb9795">App not always a process tree</h3>
 <p>
 In this case, for didactic purposes
 </p>
 </section>
-<section id="slide-orge1fd0e7">
-<h3 id="orge1fd0e7">directory tree</h3>
+<section id="slide-org27d3e7f">
+<h3 id="org27d3e7f">directory tree</h3>
 <blockquote nil>
 <p>
 foo
@@ -794,20 +849,20 @@ foo
 </p>
 </blockquote>
 </section>
-<section id="slide-org8df6423">
-<h3 id="org8df6423">What to supervise?</h3>
+<section id="slide-org5475d4b">
+<h3 id="org5475d4b">What to supervise?</h3>
 <p>
 In general, things that you want to have come back up if they crash.
 </p>
 </section>
-<section id="slide-org6c8c964">
-<h3 id="org6c8c964">application.ex</h3>
+<section id="slide-orge39f804">
+<h3 id="orge39f804">application.ex</h3>
 <p>
 Shows that the Application is also behaving as a Supervisor
 </p>
 </section>
-<section id="slide-org430394d">
-<h3 id="org430394d">Important code</h3>
+<section id="slide-org2d0c5f1">
+<h3 id="org2d0c5f1">Important code</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">start</span>(<span style="color: #b22222;">_type</span>, <span style="color: #b22222;">_args</span>) <span style="color: #a020f0;">do</span>
@@ -822,8 +877,8 @@ Shows that the Application is also behaving as a Supervisor
 </pre>
 </div>
 </section>
-<section id="slide-org9ba9b97">
-<h3 id="org9ba9b97">Connecting the dots</h3>
+<section id="slide-org7c62c30">
+<h3 id="org7c62c30">Connecting the dots</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">Foo.Worker</span> <span style="color: #a020f0;">do</span>
@@ -840,27 +895,27 @@ iex(15)&gt; <span style="color: #228b22;">GenServer</span>.whereis(<span style="
 </pre>
 </div>
 </section>
-<section id="slide-orgca696ab">
-<h3 id="orgca696ab">Exercise</h3>
+<section id="slide-org5ede970">
+<h3 id="org5ede970">Exercise</h3>
 <p>
 Put the RPS game in a project with a supervision tree (<code>--sup</code>). You can test it with <code>iex -S mix</code> to start a REPL with the project. Try to make it crash. See if you get error messages.
 </p>
 </section>
 </section>
 <section>
-<section id="slide-orgca33433">
-<h2 id="orgca33433">SMALL BREAK</h2>
+<section id="slide-org4a6e0af">
+<h2 id="org4a6e0af">SMALL BREAK</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgad7b210">
-<h2 id="orgad7b210">Deploying</h2>
+<section id="slide-orge68a64e">
+<h2 id="orge68a64e">Deploying</h2>
 <p>
 <a href="https://hexdocs.pm/distillery/walkthrough.html#content">https://hexdocs.pm/distillery/walkthrough.html#content</a>
 </p>
 </section>
-<section id="slide-orgc453b21">
-<h3 id="orgc453b21">Add distillery to RPS project</h3>
+<section id="slide-org3750ac9">
+<h3 id="org3750ac9">Add distillery to RPS project</h3>
 <p>
 In mix.exs file, replace the <code>deps</code> function with
 </p>
@@ -875,8 +930,8 @@ In mix.exs file, replace the <code>deps</code> function with
 then run <code>mix deps.get &amp;&amp; mix release.init</code>
 </p>
 </section>
-<section id="slide-org19cbd50">
-<h3 id="org19cbd50">Build the release</h3>
+<section id="slide-orgdb80bfa">
+<h3 id="orgdb80bfa">Build the release</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash"><span style="color: #a0522d;">MIX_ENV</span>=prod mix release --env=prod
@@ -891,8 +946,8 @@ _build/prod/rel/project_name/releases/0.1.0/project_name.tar.gz
 </p>
 
 </section>
-<section id="slide-org8c3669d">
-<h3 id="org8c3669d">Place that tarball somewhere and untar</h3>
+<section id="slide-orgfdbdb38">
+<h3 id="orgfdbdb38">Place that tarball somewhere and untar</h3>
 <p>
 Ye olde
 </p>
@@ -902,24 +957,24 @@ Ye olde
 </pre>
 </div>
 </section>
-<section id="slide-orga5ae683">
-<h3 id="orga5ae683">Start the app</h3>
+<section id="slide-orgf62b855">
+<h3 id="orgf62b855">Start the app</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash">/deploy/path/bin/project_name start
 </pre>
 </div>
 </section>
-<section id="slide-org28d7344">
-<h3 id="org28d7344">Connect to it</h3>
+<section id="slide-orgd52005f">
+<h3 id="orgd52005f">Connect to it</h3>
 <div class="org-src-container">
 
 <pre  class="src src-bash">/deploy/path/bin/project_name remote_console
 </pre>
 </div>
 </section>
-<section id="slide-orga472731">
-<h3 id="orga472731">Build upgrade, part 1</h3>
+<section id="slide-org04e999e">
+<h3 id="org04e999e">Build upgrade, part 1</h3>
 <ol>
 <li>Open a new terminal</li>
 <li>change version number in mix.exs</li>
@@ -933,8 +988,8 @@ _build/prod/rel/project_name/releases/
 new_version_number/project_name.tar.gz
 </p>
 </section>
-<section id="slide-org7cd96cc">
-<h3 id="org7cd96cc">Build upgrade, part 2</h3>
+<section id="slide-orgec8cfaf">
+<h3 id="orgec8cfaf">Build upgrade, part 2</h3>
 <ol>
 <li>Create directory /path/releases/new_version_number</li>
 <li>Put the new tarball in there</li>
@@ -945,8 +1000,8 @@ new_version_number/project_name.tar.gz
 </section>
 </section>
 <section>
-<section id="slide-org812a9aa">
-<h2 id="org812a9aa">Parting thoughts</h2>
+<section id="slide-org949bd70">
+<h2 id="org949bd70">Parting thoughts</h2>
 <p>
 Good time for questions!
 If you don't have questions, check out this blog entry: distributed game of life, because why not?
@@ -956,13 +1011,13 @@ If you don't have questions, check out this blog entry: distributed game of life
 </section>
 </section>
 <section>
-<section id="slide-org40db2eb">
-<h2 id="org40db2eb">Bonus material</h2>
+<section id="slide-org59278d8">
+<h2 id="org59278d8">Bonus material</h2>
 </section>
 </section>
 <section>
-<section id="slide-orga476922">
-<h2 id="orga476922">Railway programming</h2>
+<section id="slide-org34c1ce1">
+<h2 id="org34c1ce1">Railway programming</h2>
 <p>
 This is how you would implement railway programming.
 </p>
@@ -987,8 +1042,8 @@ This is how you would implement railway programming.
 </section>
 </section>
 <section>
-<section id="slide-orgadcaaac">
-<h2 id="orgadcaaac">anonymous recursion</h2>
+<section id="slide-org96b8c4e">
+<h2 id="org96b8c4e">anonymous recursion</h2>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a0522d;">factorial</span> = <span style="color: #a020f0;">fn</span>
@@ -1002,12 +1057,12 @@ factorial.(6, factorial) <span style="color: #b22222;"># </span><span style="col
 </section>
 </section>
 <section>
-<section id="slide-org545019e">
-<h2 id="org545019e">Code samples</h2>
-<div class="outline-text-2" id="text-org545019e">
+<section id="slide-org322ddff">
+<h2 id="org322ddff">Code samples</h2>
+<div class="outline-text-2" id="text-org322ddff">
 </div></section>
-<section id="slide-org8f33102">
-<h3 id="org8f33102">Map of squares</h3>
+<section id="slide-org943e7be">
+<h3 id="org943e7be">Map of squares</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">SquaresMap</span> <span style="color: #a020f0;">do</span>
@@ -1029,8 +1084,8 @@ factorial.(6, factorial) <span style="color: #b22222;"># </span><span style="col
 </pre>
 </div>
 </section>
-<section id="slide-orge0320b4">
-<h3 id="orge0320b4">Fizzbuzz</h3>
+<section id="slide-org38b0d3d">
+<h3 id="org38b0d3d">Fizzbuzz</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">FizzBuzz</span> <span style="color: #a020f0;">do</span>
@@ -1047,8 +1102,8 @@ factorial.(6, factorial) <span style="color: #b22222;"># </span><span style="col
 </pre>
 </div>
 </section>
-<section id="slide-org9b76fcc">
-<h3 id="org9b76fcc">Guess the number</h3>
+<section id="slide-orga4b9cbc">
+<h3 id="orga4b9cbc">Guess the number</h3>
 <div class="org-src-container">
 
 <pre  class="src src-elixir"><span style="color: #a020f0;">defmodule</span> <span style="color: #228b22;">Guess</span> <span style="color: #a020f0;">do</span>
