@@ -1,22 +1,6 @@
 #+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t reveal_title_slide:nil reveal_slide_number:nil reveal_progress:t reveal_history:t reveal_center:t
 #+REVEAL_THEME: solarized
 
-
-* [3/11] foo
-- [X] cover atoms and tuples
-- [X] Named functions - myfunc => double_numbers
-- [X] squares and hash - fix example
-- [ ] pattern matching - show default match
-- [ ] Processes - where does spawn come from?
-https://hexdocs.pm/elixir/Kernel.html#spawn/1
-- [ ] programming elixir needs closing quotes
-- [ ] genserver - link to docs / handle_call / reply shape
-- [ ] genserver state - pass [] as initial state
-- [ ] rps as a service ? small break here?
-- [ ] supervisors & apps & processes .. smooth?
-- [ ] railway programming, deal, 5, second line
-
-
 * ⚗️ELIXIR! ⚗️
 λ conf 2017 workshop
 * "Aldric!"
@@ -148,9 +132,12 @@ defmodule Foo do
   def bar(2) do
     IO.puts "yah yah"
   end
+  def bar(x) do
+    IO.puts "default"
+  end
 end
 #+END_SRC
-What happens if you call =Foo.bar(3)=?
+What happens if the last function is not defined??
 ** Pattern matching, anonymous function
 #+BEGIN_SRC elixir
 function = fn
@@ -228,6 +215,8 @@ Copy the previous code over to a new file and tweak the rules so that:
 * SMALL BREAK
 * Processes!
 Now things get exciting.
+** What is =self()= anyway?
+In Elixir, =self()= refers to THE CURRENT PROCESS.
 ** Two simple tools
 - =send=
 - =receive=
@@ -240,6 +229,7 @@ iex(13)> receive do :hello -> :world end
 #+END_SRC
 ** We can send any message to any process.
 How to keep track of the sender? How about send the sender's pid?
+https://hexdocs.pm/elixir/Kernel.html#spawn/1
 #+BEGIN_SRC elixir
 iex(8)> pid_of_repl = self()
 #PID<0.80.0>
@@ -253,9 +243,9 @@ iex(11)> receive do
 Velociraptors!
 :ok
 #+END_SRC
-* Exercise: parallel map
-How would you build code that does parallel mapping?
-** From "Programming Elixir
+* Exercise: distributed map
+How would you build code that does distributed mapping?
+** From "Programming Elixir"
 Courtesy of Dave Thomas - excerpt from Programming Elixir, used with permission.
 #+BEGIN_SRC elixir
 defmodule Parallel do
@@ -263,7 +253,7 @@ defmodule Parallel do
     me = self()
     collection
     |> Enum.map(fn (elem) ->
-         spawn_link fn -> (send me, { self(), fun.(elem) }) end
+         spawn fn -> send(me, { self(), fun.(elem) }) end
        end)
     |> Enum.map(fn (pid) ->
          receive do { ^pid, result } -> result end
@@ -311,12 +301,18 @@ defmodule MyServer do
   end
 end
 
-{:ok, pid} = GenServer.start_link(MyServer, nil) # nil means store nil as state
+{:ok, pid} = GenServer.start_link(MyServer, []) # store [] as initial state
 :ok = GenServer.call(pid, {:add_name, "Kathew"})
 :ok = GenServer.call(pid, {:add_name, "Lichard"})
 {:ok, greetings} = GenServer.call(pid, :greetings)
 #+END_SRC
-** Rock-paper-scissors ... As a Service
+** Relevant documentation
+https://hexdocs.pm/elixir/GenServer.html#c:handle_call/3
+
+https://hexdocs.pm/elixir/GenServer.html#c:handle_cast/2
+* OPTIONAL SMALL BREAK
+* GenServers part 2
+* Rock-paper-scissors ... As a Service
 Create a GenServer that lets you play RPS and keeps track of the number of wins for each player as well as a percentage of time each player chose.
 * Rock Paper Scissors, many processes
 Make it possible to change between rulesets, and preserve stats for each rulesets while the game is running (don't worry about storing anything).
@@ -329,7 +325,8 @@ Maybe you store all the pids in the game state and you send a message to switch 
 ** A supervisor is a process guardian
 Gets notified and acts appropriately if a supervised process goes down.
 ** Won't show supervisors outside an application for simplicity
-Supervisors manage processes
+- Supervisors manage processes
+- Supervising processes in REPL is useless
 ** An application is a reusable unit of code
 Think "microservice" if you have to.
 * Creating a project
@@ -384,7 +381,6 @@ iex(15)> GenServer.whereis(Foo.Worker)
 ** Exercise
 Put the RPS game in a project with a supervision tree (=--sup=). You can test it with =iex -S mix= to start a REPL with the project. Try to make it crash. See if you get error messages
 * SMALL BREAK
-( ~ 4:50 )
 * Deploying
 https://hexdocs.pm/distillery/walkthrough.html#content
 ** Add distillery to RPS project
@@ -435,7 +431,7 @@ http://beyondscheme.com/2016/distributed-game-of-life-in-elixir
 This is how you would implement railway programming.
 #+BEGIN_SRC elixir
   with {:ok, new_deck1, hand1} <- Deck.deal(original_deck, 5),
-       {:ok, new_deck2, hand2} <- Deck.deal(new_deck1),
+       {:ok, new_deck2, hand2} <- Deck.deal(new_deck1, 5),
        {:ok, hand1_rank} <- Poker.rank(hand1),
        {:ok, hand2_rank} <- Poker.rank(hand2) do
     if hand1_rank > hand2_rank do
