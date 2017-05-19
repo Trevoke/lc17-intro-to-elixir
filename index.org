@@ -42,13 +42,42 @@ Interactive Elixir (1.4.2) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)>
 #+END_SRC
 ** Data structures
-- numbers
-- strings (interpolation)
-- ranges
-- maps
-- lists
-- atoms
-- tuples
+*** numbers
+#+BEGIN_SRC elixir
+1
+-5
+389321
+4.9
+#+END_SRC
+*** strings (interpolation)
+#+BEGIN_SRC elixir
+"Hello, world!"
+"Hello, #{someone}!"
+'What?' # NOT A STRING. ERLANG CHARLIST.
+#+END_SRC
+*** ranges
+#+BEGIN_SRC elixir
+1..10
+#+END_SRC
+*** maps
+#+BEGIN_SRC elixir
+%{"a" => 5, b: 7}
+#+END_SRC
+*** lists
+#+BEGIN_SRC elixir
+[1,2,3]
+#+END_SRC
+*** atoms
+#+BEGIN_SRC elixir
+:hello
+:"atom with space"
+#+END_SRC
+*** tuples
+#+BEGIN_SRC elixir
+{:ok, "sweet"}
+{1,2,3,4}
+{:error, :connection_not_established}
+#+END_SRC
 ** Console interface, gets and puts
 - =IO.puts foo=
 - =IO.inspect foo=
@@ -112,13 +141,14 @@ beatles = ["john", "paul", "george", "ringo", "stu"]
 #+END_SRC
 *** Squares and Hash
 Write code that:
-- Prompts the user for a minimum and maximum number.
-- Generates a Hash that has key-value pairs, or entries, where.
-  - Each key in a pair is a integer between the min and max entered.
-  - Each value in the pair is the square of key in that pair.
+- Prompts the user for a minimum and maximum number
+- Generates a Hash that has key-value pairs, or entries, where:
+  - Each key in a pair is a integer between the min and max entered
+  - Each value in the pair is the square of key in that pair
 (hint: use =Enum.reduce/3=)
 #+BEGIN_SRC elixir
-# with a min and max of 2 and 4, respectively, the resulting hash would be:
+# with a min and max of 2 and 4, respectively,
+# the resulting hash would be:
 a = %{2=>4, 3=>9, 4=>16}
 #+END_SRC
 * SMALL BREAK
@@ -146,7 +176,7 @@ defmodule Foo do
   end
 end
 #+END_SRC
-What happens if the last function is not defined??
+What happens if the last function is not defined?
 ** Pattern matching, anonymous function
 #+BEGIN_SRC elixir
 function = fn
@@ -174,6 +204,7 @@ end
 #+END_SRC
 ** Guard clauses on functions
 I refer to this page a /lot/.
+
 http://elixir-lang.org/getting-started/case-cond-and-if.html#expressions-in-guard-clauses
 - =def(x) when x > 5=
 - =def(x) when x < 0=
@@ -187,7 +218,9 @@ The Fibonacci series is defined as:
 - n(2) = 1
 - n(x) = n(x-1) + n(x+2)
 ** Fizzbuzz exercise
-Write a program that prints the numbers from 1 to 100. But for multiples of three print "Fizz" instead of the number and for the multiples of five print "Buzz". For numbers which are multiples of both three and five print "FizzBuzz".
+Write a program that prints the numbers from 1 to 100.
+
+For multiples of three print "Fizz" instead of the number and for multiples of five print "Buzz". For numbers which are multiples of both three and five print "FizzBuzz".
 * SMALL BREAK
 * Combining functions
 ** Pipelining
@@ -246,7 +279,9 @@ https://hexdocs.pm/elixir/Kernel.html#spawn/1
 #+BEGIN_SRC elixir
 iex(8)> pid_of_repl = self()
 #PID<0.80.0>
-iex(9)> velociraptors = fn -> send(pid_of_repl, {self(), "Velociraptors!"}) end
+iex(9)> velociraptors = fn ->
+...(9)>   send(pid_of_repl, {self(), "Velociraptors!"})
+...(9)> end
 #Function<20.118419387/0 in :erl_eval.expr/5>
 iex(10)> child_pid = spawn(velociraptors)
 #PID<0.98.0>
@@ -280,13 +315,11 @@ end
 #+BEGIN_SRC elixir
 defmodule MyServer do
   use GenServer
-
   def handle_cast({:ping, x}, state) do
     :timer.sleep 2000
     IO.inspect x
     {:noreply, state}
   end
-
   def handle_call({:ping, x}, _from, state) do
     :timer.sleep 2000
     IO.inspect x
@@ -294,7 +327,8 @@ defmodule MyServer do
   end
 end
 
-{:ok, pid} = GenServer.start_link(MyServer, nil) # nil means store nil as state
+# nil means store nil as state
+{:ok, pid} = GenServer.start_link(MyServer, nil)
 GenServer.cast(pid, {:ping, "hello, world"})
 GenServer.call(pid, {:ping, "hello, world"})
 #+END_SRC
@@ -303,18 +337,17 @@ GenServer.call(pid, {:ping, "hello, world"})
 #+BEGIN_SRC elixir
 defmodule MyServer do
   use GenServer
-
   def handle_call({:add_name, name}, _from, state) do
     {:reply, :ok, [name | state]}
   end
-
   def handle_call(:greetings, _from, state) do
     greetings = Enum.map(state, fn(x) -> "Hello, #{x}!" end)
     {:reply, {:ok, greetings}, state}
   end
 end
 
-{:ok, pid} = GenServer.start_link(MyServer, []) # store [] as initial state
+# store [] as initial state
+{:ok, pid} = GenServer.start_link(MyServer, [])
 :ok = GenServer.call(pid, {:add_name, "Kathew"})
 :ok = GenServer.call(pid, {:add_name, "Lichard"})
 {:ok, greetings} = GenServer.call(pid, :greetings)
@@ -327,10 +360,14 @@ https://hexdocs.pm/elixir/GenServer.html#c:handle_cast/2
 * GenServers part 2
 * Rock-paper-scissors ... As a Service
 Create a GenServer that lets you play RPS and keeps track of the number of wins for each player as well as a percentage of time each player chose.
+
+Send a message to get a string version of the stats back.
 * Rock Paper Scissors, many processes
 Make it possible to change between rulesets, and preserve stats for each rulesets while the game is running (don't worry about storing anything).
-Maybe each ruleset/stats is a separate process and you can store the pid as part of the state of the game process?
-Maybe you store all the pids in the game state and you send a message to switch to another ruleset.
+
+Thoughts:
+- Maybe each ruleset/stats is a separate process and you can store the pid as part of the state of the game process?
+- Maybe you store all the pids in the game state and you send a message to switch to another ruleset?
 * SMALL BREAK
 * RPS, many processes, part 2
 * LONG BREAK
@@ -339,7 +376,7 @@ Maybe you store all the pids in the game state and you send a message to switch 
 Gets notified and acts appropriately if a supervised process goes down.
 ** Won't show supervisors outside an application for simplicity
 - Supervisors manage processes
-- Supervising processes in REPL is useless
+- Supervising processes in REPL is useless for our purposes.
 ** An application is a reusable unit of code
 Think "microservice" if you have to.
 * Creating a project
@@ -349,16 +386,27 @@ In this case, for didactic purposes
 ** directory tree
 #+BEGIN_QUOTE
 foo
+
 ├── config
+
 │   └── config.exs
+
 ├── lib
+
 │   ├── foo
+
 │   │   └── application.ex
+
 │   └── foo.ex
+
 ├── mix.exs
+
 ├── README.md
+
 └── test
+
     ├── foo_test.exs
+
     └── test_helper.exs
 #+END_QUOTE
 ** What to supervise?
@@ -392,7 +440,7 @@ iex(15)> GenServer.whereis(Foo.Worker)
 #PID<0.114.0>
 #+END_SRC
 ** Exercise
-Put the RPS game in a project with a supervision tree (=--sup=). You can test it with =iex -S mix= to start a REPL with the project. Try to make it crash. See if you get error messages
+Put the RPS game in a project with a supervision tree (=--sup=). You can test it with =iex -S mix= to start a REPL with the project. Try to make it crash. See if you get error messages.
 * SMALL BREAK
 * Deploying
 https://hexdocs.pm/distillery/walkthrough.html#content
@@ -409,9 +457,9 @@ then run =mix deps.get && mix release.init=
 MIX_ENV=prod mix release --env=prod
 #+END_SRC
 Now you have a tarball:
-#+BEGIN_QUOTE
+
 _build/prod/rel/project_name/releases/0.1.0/project_name.tar.gz
-#+END_QUOTE
+
 ** Place that tarball somewhere and untar
 Ye olde
 #+BEGIN_SRC bash
@@ -425,15 +473,19 @@ tar xzf project_name.tar.gz -C /deploy/path
 #+BEGIN_SRC bash
 /deploy/path/bin/project_name remote_console
 #+END_SRC
-** Build upgrade
-0. Open a new terminal
-1. change version number in mix.exs
-2. MIX_ENV=prod mix release --upgrade --env=prod
-3. _build/prod/rel/project_name/releases/new_version_number/project_name.tar.gz
-3. Create directory /deploy/path/releases/new_version_number
-4. Put the new tarball in there
-5. /deploy/path/bin/project_name upgrade new_version_number
-6. Champagne!
+** Build upgrade, part 1
+1. Open a new terminal
+2. change version number in mix.exs
+3. MIX_ENV=prod mix release --upgrade --env=prod
+4. File will be at:
+
+_build/prod/rel/project_name/releases/
+new_version_number/project_name.tar.gz
+** Build upgrade, part 2
+1. Create directory /path/releases/new_version_number
+2. Put the new tarball in there
+3. /path/bin/project_name upgrade new_version_number
+4. Champagne!
 * Parting thoughts
 Good time for questions!
 If you don't have questions, check out this blog entry: distributed game of life, because why not?
@@ -470,18 +522,22 @@ factorial.(6, factorial) # 720
 * Code samples
 ** Map of squares
 #+BEGIN_SRC elixir
-defmodule SquaresMap do
-  def generate do
-    min = String.to_integer String.trim(IO.gets("Minimum: "))
-    max = String.to_integer String.trim(IO.gets("Maximum: "))
-    generate_hash(min, max)
-  end
+  defmodule SquaresMap do
+    def generate do
+      min = String.to_integer String.trim(IO.gets("Minimum: "))
+      max = String.to_integer String.trim(IO.gets("Maximum: "))
+      generate_hash(min, max)
+    end
 
-  def generate_hash(min, max) do
-    Enum.reduce(min..max, %{}, fn(x, acc) -> Map.put(acc, x, x * x) end)
-  end
+    def generate_hash(min, max) do
+      Enum.reduce(
+        min..max,
+        %{},
+        fn(x, acc) -> Map.put(acc, x, x * x) end
+      )
+    end
 
-end
+  end
 #+END_SRC
 ** Fizzbuzz
 #+BEGIN_SRC elixir
